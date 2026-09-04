@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetsU - Product Information & Recipes</title>
+    <style>
+        :root {
+            --bg-color: #f4f8f3;
+            --card-bg: #ffffff;
+            --primary-color: #1e4620; /* Dark Green */
+            --accent-color: #2e6f32; /* Medium Green */
+            --yellow-accent: #fbc02d; /* Brand Yellow */
+            --yellow-light: #fffde7;
+            --light-accent: #eef6ec;
+            --border-color: #c8e6c9;
+            --text-dark: #1b2e1b;
+            --text-muted: #4e6e4f;
+            --alert-bg: #fff9c4;
+            --alert-border: #fff59d;
+            --alert-text: #f57f17;
+            --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .label-card {
+            background: var(--card-bg);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 25px 25px 20px 25px;
+            text-align: center;
+            border-bottom: 4px solid var(--yellow-accent);
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--yellow-accent);
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-color);
+            background-color: var(--yellow-accent);
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        .website-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .insta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffffff;
+            background: var(--insta-gradient);
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: opacity 0.2s ease;
+        }
+
+        .insta-link:hover {
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 20px 25px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Calculator Styling */
+        .calc-box {
+            background: var(--light-accent);
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .calc-slider {
+            width: 100%;
+            margin: 15px 0;
+            accent-color: var(--accent-color);
+        }
+
+        .calc-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .calc-card {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calc-card span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .calc-card small {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Allergen & Dietary Banner */
+        .allergen-box {
+            background-color: var(--alert-bg);
+            border: 1px solid var(--alert-border);
+            color: var(--alert-text);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            line-height: 1.4;
+        }
+
+        .allergen-box strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Toppings Section */
+        .toppings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 12px;
+        }
+
+        .topping-card {
+            background: var(--light-accent);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .topping-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .topping-info {
+            padding: 10px;
+        }
+
+        .topping-info h4 {
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .topping-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Ingredients */
+        .ingredients-text {
+            line-height: 1.6;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        /* Nutrition Table */
+        .nutrition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .nutrition-table th, 
+        .nutrition-table td {
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .nutrition-table th {
+            background-color: var(--light-accent);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .nutrition-table tr:nth-child(even) {
+            background-color: #f7fbf6;
+        }
+
+        .nutrition-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Recipe Box */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .recipe-box {
+            background: var(--light-accent);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .recipe-box h3 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .recipe-box ol {
+            padding-left: 18px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Highlights */
+        .highlights-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .badge {
+            background: var(--primary-color);
+            color: var(--yellow-accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Details */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .details-item span {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .cta-container {
+            text-align: center;
+            padding: 20px;
+            background: var(--light-accent);
+        }
+
+        .btn-buy {
+            display: inline-block;
+            background: var(--yellow-accent);
+            color: var(--primary-color);
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-tag {
+            background-color: var(--primary-color);
+            text-align: center;
+            padding: 12px;
+            font-weight: 700;
+            color: var(--yellow-accent);
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        .support-email {
+            color: var(--accent-color);
+            text-decoration: underline;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="label-card">
+    <div class="header">
+        <h1>Product Information</h1>
+        <div class="social-buttons">
+            <a href="https://champraghav.github.io/GetsU-/" target="_blank" class="website-link">🌐 Official Website</a>
+            <a href="https://www.instagram.com/getsu_123?igsi=MWxhdG5mdzQ2MW8zMw==" target="_blank" class="insta-link">📸 Follow @getsu_123</a>
+        </div>
+    </div>
+
+    <!-- Serving Calculator -->
+    <div class="section">
+        <h2 class="section-title">Serving Size Calculator</h2>
+        <div class="calc-box">
+            <label for="servingSlider" style="font-weight: bold;">How many servings do you want to make?</label>
+            <input type="range" id="servingSlider" class="calc-slider" min="1" max="5" value="1" step="1" oninput="updateCalculator(this.value)">
+            <p>Selected: <strong id="servingCount">1 Serving (100g)</strong></p>
+
+            <div class="calc-results">
+                <div class="calc-card">
+                    <span id="premixAmount">100 g</span>
+                    <small>Premix Required</small>
+                </div>
+                <div class="calc-card">
+                    <span id="liquidAmount">125 ml</span>
+                    <small>Milk / Water</small>
+                </div>
+                <div class="calc-card">
+                    <span id="pancakeCount">~ 4</span>
+                    <small>Pancakes Made</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Allergen & Dietary Alerts -->
+    <div class="section">
+        <h2 class="section-title">Allergen & Dietary Alerts</h2>
+        <div class="allergen-box">
+            <strong>⚠️ Allergen Information:</strong>
+            Contains Sattu (Bengal Gram). Processed in a facility that also handles nuts, milk solids, and soy.
+            <br><br>
+            <strong>🌱 Dietary Profile:</strong>
+            100% Vegetarian | High Fiber | No Added Refined Sugar | Sweetened naturally with dates.
+        </div>
+    </div>
+
+    <!-- Creative Topping Ideas -->
+    <div class="section">
+        <h2 class="section-title">Creative Topping Ideas</h2>
+        <div class="toppings-grid">
+            <div class="topping-card">
+                <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=400&q=80" alt="Nutty Honey Crunch">
+                <div class="topping-info">
+                    <h4>Nutty Honey Crunch</h4>
+                    <p>Sliced almonds, walnuts, and a drizzle of raw honey.</p>
+                </div>
+            </div>
+            <div class="topping-card">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80" alt="Berry Blast">
+                <div class="topping-info">
+                    <h4>Berry Delight</h4>
+                    <p>Fresh strawberries, blueberries, and a spoon of Greek yogurt.</p>
+                </div>
+            </div>
+            <div class="topping-card">
+                <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=400&q=80" alt="Choco Banana">
+                <div class="topping-info">
+                    <h4>Choco Banana Power</h4>
+                    <p>Banana slices with a spread of natural peanut butter.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ingredients -->
+    <div class="section">
+        <h2 class="section-title">Ingredients</h2>
+        <p class="ingredients-text">
+            Oats flour, Dates powder, Ragi flour, Sattu, Jowar flour, Cocoa powder, Baking powder, Natural vanilla flavour, Cinnamon, Baking soda, Salt.
+        </p>
+    </div>
+
+    <!-- Highlights -->
+    <div class="section">
+        <h2 class="section-title">Key Highlights</h2>
+        <div class="highlights-container">
+            <span class="badge">No Added Sugar</span>
+            <span class="badge">Source of Protein</span>
+            <span class="badge">High in Fibre</span>
+            <span class="badge">Natural Ingredients</span>
+        </div>
+    </div>
+
+    <!-- Nutrition Table -->
+    <div class="section">
+        <h2 class="section-title">Nutrition Information</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">*(Approx. values Per 100 g)*</p>
+        <table class="nutrition-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Per 100 g</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Energy (kcal)</strong></td><td>369</td></tr>
+                <tr><td><strong>Protein (g)</strong></td><td>15.0</td></tr>
+                <tr><td><strong>Carbohydrate (g)</strong></td><td>60.0</td></tr>
+                <tr><td><strong>Total Sugars (g)</strong></td><td>18.0</td></tr>
+                <tr><td><strong>Added Sugars (g)</strong></td><td>0.0</td></tr>
+                <tr><td><strong>Total Fat (g)</strong></td><td>6.5</td></tr>
+                <tr><td><strong>Saturated Fat (g)</strong></td><td>1.5</td></tr>
+                <tr><td><strong>Trans Fat (g)</strong></td><td>0.0</td></tr>
+                <tr><td><strong>Dietary Fibre (g)</strong></td><td>7.5</td></tr>
+                <tr><td><strong>Sodium (mg)</strong></td><td>420</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- How to Make -->
+    <div class="section">
+        <h2 class="section-title">How To Make</h2>
+        <div class="recipe-grid">
+            <div class="recipe-box">
+                <h3>PANCAKES <small>(Makes approx. 4)</small></h3>
+                <ol>
+                    <li><strong>Mix:</strong> 100 g premix in a bowl.</li>
+                    <li><strong>Add:</strong> 120–130 ml milk or water.</li>
+                    <li><strong>Whisk:</strong> until smooth batter.</li>
+                    <li><strong>Cook:</strong> on a pan until golden.</li>
+                </ol>
+            </div>
+            <div class="recipe-box">
+                <h3>WAFFLES <small>(Makes approx. 4)</small></h3>
+                <ol>
+                    <li><strong>Mix:</strong> 100 g premix in a bowl.</li>
+                    <li><strong>Add:</strong> 120–130 ml milk or water.</li>
+                    <li><strong>Cook:</strong> in preheated waffle maker.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Details -->
+    <div class="section">
+        <h2 class="section-title">Other Details</h2>
+        <div class="details-grid">
+            <div class="details-item"><span>Net Quantity:</span> 100 g</div>
+            <div class="details-item"><span>Batch No.:</span> -</div>
+            <div class="details-item"><span>Mfg. Date:</span> 29/8/2026</div>
+            <div class="details-item"><span>Best Before:</span> 28/2/2026</div>
+            <div class="details-item"><span>MRP ₹:</span> (Incl. of all taxes)</div>
+            <div class="details-item"><span>fssai Reg. No.:</span> 21526031000596</div>
+        </div>
+        <div style="margin-top: 15px; font-size: 0.9rem;">
+            <p><strong>STORAGE:</strong> Store in a cool, dry place. Keep away from moisture. Use a dry spoon.</p>
+            <p style="margin-top: 8px;"><strong>Mfg. Address:</strong> 49, Navi peth near Central Bank Jalgaon, Maharashtra, Adwad, Jalgaon City, Jalgaon, Maharashtra - 425001</p>
+            <p style="margin-top: 8px;">
+                <strong>Customer Support / Complaints:</strong> 
+                <a href="mailto:teamgetsu.31@gmail.com?subject=Product%20Query%20/%20Feedback%20-%20GetsU" onclick="openMail(event)" class="support-email">
+                    teamgetsu.31@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Website Buy Call to Action -->
+    <div class="cta-container">
+        <a href="https://champraghav.github.io/GetsU-/" target="_blank" class="btn-buy">Visit GetsU Store</a>
+    </div>
+
+    <div class="footer-tag">
+        MADE IN INDIA
+    </div>
+</div>
+
+<script>
+    function updateCalculator(servings) {
+        document.getElementById('servingCount').innerText = servings + (servings == 1 ? " Serving (100g)" : " Servings (" + (servings * 100) + "g)");
+        document.getElementById('premixAmount').innerText = (servings * 100) + " g";
+        document.getElementById('liquidAmount').innerText = (servings * 125) + " ml";
+        document.getElementById('pancakeCount').innerText = "~ " + (servings * 4);
+    }
+
+    function openMail(e) {
+        e.preventDefault();
+        var mailtoUrl = "mailto:teamgetsu.31@gmail.com?subject=Product%20Query%20/%20Feedback%20-%20GetsU";
+        var webmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=teamgetsu.31@gmail.com&su=Product%20Query%20/%20Feedback%20-%20GetsU";
+        
+        // Attempt mailto link, redirect to browser fallback if unhandled
+        window.location.href = mailtoUrl;
+        setTimeout(function() {
+            if (!document.hidden) {
+                window.open(webmailUrl, '_blank');
+            }
+        }, 500);
+    }
+</script>
+
+</body>
+  </html>
